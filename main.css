@@ -1,0 +1,47 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: black;
+}
+
+.product-items {
+    color: black;
+}
+
+.list-styles {
+    display: flex;
+    list-style: none;
+    background-color: antiquewhite;
+    border-radius: 30px;
+}
+
+.right-to-image {
+    float: center;
+    padding-left: 20px;
+
+}
+
+.product-items .list-styles .right-to-image img {
+    margin-top: 10px;
+    width: 150px;
+    height: 150px;
+}
+
+.product-items .list-styles button{
+    margin-top: 10px;
+    border-radius: 10rem;
+    height: 30px;
+    padding: 2px;
+    width: 200px;
+}
+
+.product-items .list-styles button:hover{
+    background-color: black;
+    color: aliceblue;
+}
+
+.product-items .Totalproducts{
+    background-color: antiquewhite;
+}
