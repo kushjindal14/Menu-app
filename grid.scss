@@ -1,0 +1,40 @@
+.grid-items {
+  width: 1200px;
+  display: grid;
+  grid-template-columns: 400px 400px 400px;
+  grid-template-rows: 600px;
+  text-align: center;
+}
+
+.card {
+  text-align: center;
+  margin-left: 125px;
+  width: 400px;
+  height: 700px;
+  background-color: antiquewhite;
+  border: 5px solid black;
+  overflow: hidden;
+}
+
+.card-description {
+  margin: 10px;
+}
+
+.card-button button {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  border-radius: 10rem;
+  width: 200px;
+  float: center;
+}
+
+.card-button button:hover {
+  background-color: black;
+  color: antiquewhite;
+}
+
+.card-image img {
+  width: 150px;
+  height: 150px;
+}
