@@ -1,0 +1,34 @@
+.list-styles {
+  display: flex;
+  list-style: none;
+  background-color: antiquewhite;
+  border-radius: 30px;
+  border: 5px solid black;
+}
+
+.right-to-image {
+  float: center;
+  padding-left: 20px;
+}
+
+.list-image img {
+  width: 150px;
+  height: 150px;
+}
+
+.lists-items .list-styles button {
+  margin-top: 10px;
+  border-radius: 10rem;
+  height: 30px;
+  padding: 2px;
+  width: 200px;
+}
+
+.lists-items .list-styles button:hover {
+  background-color: black;
+  color: aliceblue;
+}
+
+.lists-items .Totalproducts {
+  background-color: antiquewhite;
+}
