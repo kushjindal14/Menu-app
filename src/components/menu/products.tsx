@@ -22,13 +22,31 @@ const Product = () => {
     }
   };
 
-  const cat = new Set(
-    product.map((item) => {
-      return item.category;
-    })
+  const categories = product.map((item: IProduct) => {
+    return item.category;
+  });
+  const uCategories = categories.filter(
+    (item: string, index: number) => categories.indexOf(item) === index
   );
-  console.log(cat);
+  //console.log(uCategories);
 
+  const filteredResults = uCategories.map((category: string) => {
+    return {
+      category,
+      // items: product
+      //   .map((item: IProduct) => {
+      //     if (item.category === category) {
+      //       return item;
+      //     }
+      //   })
+      //   .filter(Boolean),
+      items: product.filter((item: IProduct) => item.category === category),
+    };
+  });
+
+  //console.log(filteredResults);
+
+  // Avoid sets
   // const filteredResults = new Set(
   //   product.map((item) => {
   //     return {
@@ -66,6 +84,7 @@ const Product = () => {
       </label>
       <h3 className="total-products">Found {product.length} items</h3>
       <>
+        {/** use single map func */}
         {product.map((item: IProduct) => (
           <>
             {active ? (
