@@ -4,6 +4,7 @@ import List from "./list-view";
 import Grid from "./grid-view";
 import { IProduct } from "../../types/common.types";
 import "./main.scss";
+import { DiagnosticCategory, idText, isTemplateExpression } from "typescript";
 
 const Product = () => {
   const [product, setProduct] = useState<IProduct[]>([]);
@@ -28,7 +29,6 @@ const Product = () => {
   const uCategories = categories.filter(
     (item: string, index: number) => categories.indexOf(item) === index
   );
-  //console.log(uCategories);
 
   const filteredResults = uCategories.map((category: string) => {
     return {
@@ -44,58 +44,31 @@ const Product = () => {
     };
   });
 
-  //console.log(filteredResults);
-
-  // Avoid sets
-  // const filteredResults = new Set(
-  //   product.map((item) => {
-  //     return {
-  //       items: product.filter((item) => cat),
-  //     };
-  //   })
-  // );
-
-  // const filteredData = [
-  //   {
-  //     category: "men's clothing",
-  //     items: [{ filteredResults }],
-  //   },
-  //   {
-  //     category: "men's clothing",
-  //     items: [{ filteredResults }],
-  //   },
-  //   {
-  //     category: "men's clothing",
-  //     items: [{ filteredResults }],
-  //   },
-  //   {
-  //     category: "men's clothing",
-  //     items: [{ filteredResults }],
-  //   },
-  // ];
-  // console.log(filteredData);
+  console.log(filteredResults);
 
   if (!product.length) return <div>Loading...</div>;
   return (
     <div>
-      <label className="switch">
-        <input type="checkbox" onClick={() => setActive(!active)} />
-        <span className="slider"></span>
-      </label>
-      <h3 className="total-products">Found {product.length} items</h3>
+      <div className="top">
+        <h3>List</h3>
+        <label className="switch">
+          <input type="checkbox" onClick={() => setActive(!active)} />
+          <span className="slider"></span>
+        </label>
+        <h3>Grid</h3>
+      </div>
+      <hr />
+      <h3 className="total-products">Found total {product.length} items</h3>
+      <hr />
       <>
-        {/** use single map func */}
-        {product.map((item: IProduct) => (
+        {filteredResults.map((filteredResult) => (
           <>
-            {active ? (
-              <div className="lists-items">
-                <List item={item} />
-              </div>
-            ) : (
-              <div className="grid-items">
-                <Grid item={item} />
-              </div>
-            )}
+           <div>{filteredResult.category}</div>
+           {filteredResult.items.map((item:IProduct)=>(
+            <List item={item}/>
+           )
+            
+           )}
           </>
         ))}
       </>
@@ -104,19 +77,18 @@ const Product = () => {
 };
 
 export default Product;
-
-// JSX element
-// JSX element in map func
-
-// {active ? (
-//   <div className="lists-items">
-//       return <List item={item} />;
-//     })}
-//   </div>
-// ) : (
-//   <div className="grid-items">
-//     {product.map((item: IProduct) => {
-//       return <Grid item={item} />;
-//     })}
-//   </div>
-// )}
+//  {active ? (
+//               <div className="lists-items">
+//                 <h3 className="display-list-categories">
+//                   {uCategories.category}
+//                 </h3>
+//                 <List item={uCategories} />
+//               </div>
+//             ) : (
+//               <div className="grid-items">
+//                 <h3 className="display-grid-categories">
+//                   {uCategories.category}{" "}
+//                 </h3>
+//                 <Grid item={uCategories} />
+//               </div>
+//             )}
