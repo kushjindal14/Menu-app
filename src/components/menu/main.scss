@@ -1,3 +1,6 @@
+body{
+  margin: 40px;
+}
 .top {
   display: flex;
   margin-left: 45%;
@@ -53,4 +56,15 @@
     -ms-transform: translateX(8px);
     transform: translateX(8px);
   }
+}
+
+.categories {
+  text-transform: uppercase;
+  margin-left: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  width: 400px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }

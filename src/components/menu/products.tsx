@@ -33,18 +33,9 @@ const Product = () => {
   const filteredResults = uCategories.map((category: string) => {
     return {
       category,
-      // items: product
-      //   .map((item: IProduct) => {
-      //     if (item.category === category) {
-      //       return item;
-      //     }
-      //   })
-      //   .filter(Boolean),
       items: product.filter((item: IProduct) => item.category === category),
     };
   });
-
-  console.log(filteredResults);
 
   if (!product.length) return <div>Loading...</div>;
   return (
@@ -63,12 +54,22 @@ const Product = () => {
       <>
         {filteredResults.map((filteredResult) => (
           <>
-           <div>{filteredResult.category}</div>
-           {filteredResult.items.map((item:IProduct)=>(
-            <List item={item}/>
-           )
-            
-           )}
+            <div className="categories">
+              {filteredResult.category} ({filteredResult.items.length})
+            </div>
+            {filteredResult.items.map((item: IProduct) => (
+              <div>
+                {active ? (
+                  <div className="lists-items">
+                    <List item={item} />
+                  </div>
+                ) : (
+                  <div className="grid-items">
+                    <Grid item={item} />
+                  </div>
+                )}
+              </div>
+            ))}
           </>
         ))}
       </>
@@ -77,18 +78,3 @@ const Product = () => {
 };
 
 export default Product;
-//  {active ? (
-//               <div className="lists-items">
-//                 <h3 className="display-list-categories">
-//                   {uCategories.category}
-//                 </h3>
-//                 <List item={uCategories} />
-//               </div>
-//             ) : (
-//               <div className="grid-items">
-//                 <h3 className="display-grid-categories">
-//                   {uCategories.category}{" "}
-//                 </h3>
-//                 <Grid item={uCategories} />
-//               </div>
-//             )}
