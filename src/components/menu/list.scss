@@ -1,34 +1,24 @@
 .list-styles {
-  display: flex;
   list-style: none;
-  background-color: antiquewhite;
-  border-radius: 30px;
-  border: 5px solid black;
-}
-
-.right-to-image {
-  float: center;
-  padding-left: 20px;
-}
-
-.list-image img {
-  width: 150px;
-  height: 150px;
-}
-
-.lists-items .list-styles button {
-  margin-top: 10px;
-  border-radius: 10rem;
-  height: 30px;
-  padding: 2px;
-  width: 200px;
-}
-
-.lists-items .list-styles button:hover {
-  background-color: black;
-  color: aliceblue;
-}
-
-.lists-items .Totalproducts {
-  background-color: antiquewhite;
+  background-color: white;
+  border-color: white;
+  border-style: ridge;
+  border-radius: 3rem;
+  display: flex;
+  .list-image img {
+    padding: 25px;
+    width: 200px;
+    height: 200px;
+    border-radius: 5rem;
+  }
+  button {
+    display: flex;
+    padding: 5px 50px 5px 50px;
+    margin-top: 30px;
+    border-radius: 5rem;
+  }
+  button:hover {
+    background-color: black;
+    color: white;
+  }
 }
