@@ -79,3 +79,16 @@ body{
   margin-right: 50px;
   border-right: 2px solid black;
  }
+
+ .filtering-checkbox {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: 10%;
+  border-right: 2px solid gray;
+  margin-right: 10px;
+}
+
+.products {
+  display: flex;
+  float: start;
+}
