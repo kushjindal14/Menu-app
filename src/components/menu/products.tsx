@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import axios from "axios";
 import List from "./list-view";
 import Grid from "./grid-view";
 import { IProduct } from "../../types/common.types";
 import "./main.scss";
-import { DiagnosticCategory, idText, isTemplateExpression } from "typescript";
+import filter from "./filtering";
 
 const Product = () => {
   const [product, setProduct] = useState<IProduct[]>([]);
@@ -13,6 +13,7 @@ const Product = () => {
   useEffect(() => {
     getdata();
   }, []);
+
 
   const getdata = async () => {
     try {
@@ -40,6 +41,7 @@ const Product = () => {
   if (!product.length) return <div>Loading...</div>;
   return (
     <div>
+    <div>
       <div className="top">
         <h3>List</h3>
         <label className="switch">
@@ -51,9 +53,31 @@ const Product = () => {
       <hr />
       <h3 className="total-products">Found total {product.length} items</h3>
       <hr />
-      <>
+      <div className="products">
+       <div className="checkbox-filter">
+          <form>
+            <h3>Filter Products</h3>
+            <div>
+                <input type="checkbox"/>
+                <label>Men's Clothing</label>
+            </div>
+             <div>
+                <input type="checkbox"/>
+                <label>Jewelery</label>
+            </div>
+             <div>
+                <input type="checkbox"/>
+                <label>Electronics</label>
+            </div>
+             <div>
+                <input type="checkbox"/>
+                <label>Women's Clothing</label>
+            </div>
+        </form>  
+        </div>
+      <div>
         {filteredResults.map((filteredResult) => (
-          <>
+          <div>
             <div className="categories">
               {filteredResult.category} ({filteredResult.items.length})
             </div>
@@ -61,7 +85,7 @@ const Product = () => {
               <div>
                 {active ? (
                   <div className="lists-items">
-                    <List item={item} />
+                  <List item={item} /> 
                   </div>
                 ) : (
                   <div className="grid-items">
@@ -70,10 +94,12 @@ const Product = () => {
                 )}
               </div>
             ))}
-          </>
+          </div>
         ))}
-      </>
+      </div>
+      </div>
     </div>
+     </div>
   );
 };
 

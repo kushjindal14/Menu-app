@@ -1,12 +1,18 @@
 .grid-items {
-  max-width: 22%;
+  max-width: 20%;
+  text-align: left;
   margin: 0 auto;
-  height: 100px;
+  height: 130px;
   background: white;
-  width: 50%;
+  width: 20%;
   padding: 20px;
-  margin: 2em;
-  padding-left: 30px;
+  margin: 2.3em;
+  display: grid;
+  padding-right: 55px;
+  grid-template-columns: 400px 400px 400px;
+  grid-template-rows: 300px;
+  overflow: hidden;
+  padding-left: 10px;
   float: left;
   padding-bottom: 30%;
   border-style: ridge;
@@ -14,13 +20,13 @@
 }
 .card {
   .card-image img {
-    padding-left: 20%;
+    padding-left: 10%;
     width: 200px;
     height: 200px;
   }
   .card-button button {
     text-align: center;
-    padding: 5px 50px 5px 50px;
+    padding: 5px 10px 5px 10px;
     margin-left: 15%;
     margin-top: 40px;
     border-radius: 5rem;
@@ -31,9 +37,15 @@
     color: white;
   }
   .card-description {
-    overflow: auto;
-    white-space: normal;
+    overflow: scroll;
+    white-space:normal;
     height: 3em;
+    width: 320px;
     text-overflow: -o-ellipsis-lastline;
+  }
+  .card-title{
+    overflow: hidden;
+    width: 300px;
+
   }
 }
