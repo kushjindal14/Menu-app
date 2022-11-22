@@ -81,6 +81,8 @@ body{
  }
 
  .filtering-checkbox {
+  float: start;
+  display: block;
   flex-basis: 0;
   flex-grow: 999;
   min-inline-size: 10%;
@@ -90,5 +92,4 @@ body{
 
 .products {
   display: flex;
-  float: start;
 }
