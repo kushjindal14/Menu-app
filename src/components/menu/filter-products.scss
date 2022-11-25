@@ -1,0 +1,17 @@
+.checkbox-filter {
+    padding: 10px;
+    white-space: nowrap;
+    margin-right: 50px;
+    border-right: 2px solid black;
+}
+
+.filtering-checkbox {
+    padding: 10px;
+    white-space: nowrap;
+    margin-right: 20px;
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: 10%;
+    text-transform: uppercase;
+}
+

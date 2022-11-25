@@ -1,31 +1,20 @@
+import "./filter-products.scss";
 
-import { useEffect, useState } from "react";
-import { IProduct } from "../../types/common.types";
-
-
-const filter =() =>{
-return(
-        <form>
-            <h3>Filter Products</h3>
-            <div>
-                <input type="checkbox"/>
-                <label>Men's Clothing</label>
-            </div>
-             <div>
-                <input type="checkbox"/>
-                <label>Jewelery</label>
-            </div>
-             <div>
-                <input type="checkbox"/>
-                <label>Electronics</label>
-            </div>
-             <div>
-                <input type="checkbox"/>
-                <label>Women's Clothing</label>
-            </div>
-        </form>  
-      
-)
+interface props {
+  props: any;
 }
 
-export default filter;
+const Filter = ({ props }: props) => {
+  return (
+    <div>
+      {props.map((filteredResult:any) => (
+        <div className="filtering-checkbox">
+          <input type="checkbox" />
+          <label>{filteredResult.category}</label>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Filter;

@@ -1,10 +1,12 @@
-import  { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import axios from "axios";
 import List from "./list-view";
 import Grid from "./grid-view";
 import { IProduct } from "../../types/common.types";
-import "./main.scss";
+import "./product.scss";
 import Switch from "./switch";
+import Filter from "./filtering";
+import { isTemplateExpression } from "typescript";
 
 const Product = () => {
   const [product, setProduct] = useState<IProduct[]>([]);
@@ -13,7 +15,6 @@ const Product = () => {
   useEffect(() => {
     getdata();
   }, []);
-
 
   const getdata = async () => {
     try {
@@ -41,40 +42,42 @@ const Product = () => {
   if (!product.length) return <div>Loading...</div>;
   return (
     <div>
-    <div>
-      <div><Switch onClick={() => setActive(!active)}/></div>
+      <div>
+        <Switch onClick={() => setActive(!active)} />
+      </div>
       <hr />
       <h3 className="total-products">Found total {product.length} items</h3>
+
       <hr />
-        {filteredResults.map((filteredResult) => (
-            <div className="products">
-               <div className="filtering-checkbox">
-                <input type="checkbox"/>
-                <label>{filteredResult.category}</label>
+      <div className="products">
+        <div>
+          <h3>CATEGORIES</h3>
+          <Filter props={filteredResults} />
+        </div>
+        <div className="division-left">
+          {filteredResults.map((filteredResult) => (
+            <div>
+              <div className="categories">
+                {filteredResult.category} ({filteredResult.items.length})
               </div>
-          <div>
-            <div className="categories">
-              {filteredResult.category} ({filteredResult.items.length})
+              {filteredResult.items.map((item: IProduct) => (
+                <div>
+                  {active ? (
+                    <div className="lists-items">
+                      <List item={item} />
+                    </div>
+                  ) : (
+                    <div className="grid-items">
+                      <Grid item={item} />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-            {filteredResult.items.map((item: IProduct) => (
-              <div>
-                {active ? (
-                  <div className="lists-items">
-                  <List item={item} /> 
-                  </div>
-                ) : (
-                  <div className="grid-items">
-                    <Grid item={item} />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-      </div>
- 
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import "./App.scss";
 import Product from "./components/menu/products";
 
 function App() {
-  return <Product />;
+  return  <Product />
 }
 
 export default App;

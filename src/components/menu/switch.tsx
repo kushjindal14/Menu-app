@@ -1,7 +1,7 @@
 import "./switch.scss";
 
 interface props{
-  onClick? : React.MouseEventHandler
+  onClick : React.MouseEventHandler
 }
 
 const Switch =({onClick}: props)=>{
