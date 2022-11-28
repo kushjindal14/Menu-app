@@ -6,10 +6,10 @@ import { IProduct } from "../../types/common.types";
 import "./product.scss";
 import Switch from "./switch";
 import Filter from "./filtering";
-import { isTemplateExpression } from "typescript";
+
 
 const Product = () => {
-  const [product, setProduct] = useState<IProduct[]>([]);
+  const [product, setProduct] = useState([]);
   const [active, setActive] = useState(true);
 
   useEffect(() => {
@@ -39,6 +39,15 @@ const Product = () => {
     };
   });
 
+  const searchHandle = async (event:any) =>{
+    let key= event.target.value;
+    let data = await axios.get('https://fakestoreapi.com/products/ +{key}');
+    if(data){
+      setProduct(data.data);
+        }
+  }
+
+
   if (!product.length) return <div>Loading...</div>;
   return (
     <div>
@@ -46,13 +55,17 @@ const Product = () => {
         <Switch onClick={() => setActive(!active)} />
       </div>
       <hr />
+      <div className="top-info">
       <h3 className="total-products">Found total {product.length} items</h3>
-
+      <div className="search-field">
+      <input placeholder="Search" onChange={searchHandle}/>
+      </div>
+      </div>
       <hr />
       <div className="products">
         <div>
           <h3>CATEGORIES</h3>
-          <Filter props={filteredResults} />
+           <Filter props={filteredResults}/>
         </div>
         <div className="division-left">
           {filteredResults.map((filteredResult) => (
