@@ -1,15 +1,21 @@
+import { ChangeEventHandler } from "react";
+import { IProduct } from "../../types/common.types";
 import "./filter-products.scss";
 
-interface props {
-  props: any;
+interface FProps{
+  SortedItems:{
+    category:string;
+    items:IProduct[];
+  }[]
+  onChange:ChangeEventHandler;
 }
 
-const Filter = ({ props }: props) => {
+const Filter = ({ SortedItems, onChange}: FProps) => {
   return (
     <div>
-      {props.map((filteredResult:any) => (
+      {SortedItems.map((filteredResult: any) => (
         <div className="filtering-checkbox">
-          <input type="checkbox" />
+          <input type="checkbox" onChange={onChange}/>
           <label>{filteredResult.category}</label>
         </div>
       ))}
