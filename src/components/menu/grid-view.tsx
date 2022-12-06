@@ -1,5 +1,4 @@
 import "./grid.scss";
-import React from "react";
 import { IProduct } from "../../types/common.types";
 
 interface IProps {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import List from "./list-view";
 import Grid from "./grid-view";
@@ -7,12 +7,11 @@ import "./product.scss";
 import Switch from "./switch";
 import Filter from "./filtering";
 import Search from "./searchbox";
-import { isTemplateExpression } from "typescript";
-
 
 const Product = () => {
   const [product, setProduct] = useState<IProduct[]>([]);
   const [active, setActive] = useState(true);
+  const [state, setState] = useState({ filters: new Set() });
 
   useEffect(() => {
     getdata();
@@ -40,21 +39,39 @@ const Product = () => {
       items: product.filter((item: IProduct) => item.category === category),
     };
   });
-  
 
   const searchHandle = async (event: any) => {
     let key = event.target.value;
-    let data = await axios.get("https://fakestoreapi.com/products/ +{key}");
+    let data = await axios.get("https://fakestoreapi.com/products/");
     if (data) {
       setProduct(data.data);
     }
   };
 
-  const checkbox_sort =() =>{
-    setActive(!active);
+  const checkbox_sort = useCallback(
+    (event) => {
+      setState((previousState) => {
+        let filters = new Set(previousState.filters);
+      
+        if (event.target.checked) {
+          filters.add(event.target.value);
+        } else {
+          filters.delete(event.target.value);
+        }
+        console.log(filters);
 
-  }
-  console.warn(checkbox_sort);
+        let products = product.filter((products) => {
+        return filters.has(products.category);
+        });    
+          console.log(products);
+    
+        return {
+          filters,
+        };
+      });
+    },
+  [setState]
+  );
 
   if (!product.length) return <div>Loading...</div>;
   return (
@@ -69,7 +86,10 @@ const Product = () => {
       <div className="products">
         <div>
           <h3>CATEGORIES</h3>
-          <Filter SortedItems={filteredResults} onChange={checkbox_sort}/>
+          <Filter
+            SortedItems={filteredResults}
+            onFilterchange={checkbox_sort} 
+          />
         </div>
         <div className="division-left">
           {filteredResults.map((filteredResult) => (

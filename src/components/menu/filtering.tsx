@@ -7,16 +7,18 @@ interface FProps{
     category:string;
     items:IProduct[];
   }[]
-  onChange:ChangeEventHandler;
+  onFilterchange:ChangeEventHandler;
 }
 
-const Filter = ({ SortedItems, onChange}: FProps) => {
+const Filter = ({ SortedItems, onFilterchange}: FProps) => {
   return (
     <div>
       {SortedItems.map((filteredResult: any) => (
+        <div key={filteredResult.category}>
         <div className="filtering-checkbox">
-          <input type="checkbox" onChange={onChange}/>
+          <input type="checkbox" onChange={onFilterchange} value={filteredResult.category}/>
           <label>{filteredResult.category}</label>
+          </div>
         </div>
       ))}
     </div>
