@@ -11,7 +11,8 @@ import Search from "./searchbox";
 const Product = () => {
   const [product, setProduct] = useState<IProduct[]>([]);
   const [active, setActive] = useState(true);
-  const [state, setState] = useState({ filters: new Set() });
+  const [state, setState] = useState([""]);
+  const [filteredItem, setFilteredItem] = useState<IProduct[]>([]);
 
   useEffect(() => {
     getdata();
@@ -48,30 +49,20 @@ const Product = () => {
     }
   };
 
-  const checkbox_sort = useCallback(
-    (event) => {
-      setState((previousState) => {
-        let filters = new Set(previousState.filters);
-      
-        if (event.target.checked) {
-          filters.add(event.target.value);
-        } else {
-          filters.delete(event.target.value);
-        }
-        console.log(filters);
-
-        let products = product.filter((products) => {
-        return filters.has(products.category);
-        });    
-          console.log(products);
-    
-        return {
-          filters,
-        };
-      });
-    },
-  [setState]
-  );
+  const checkboxSort = (event) => {
+    if (event.target.checked) {
+      setState([...state, event.target.value]);
+    } else {
+      setState(state.filter((categories) => categories !== event.target.value));
+    }
+  };
+  useEffect(() => {
+    setFilteredItem(
+      product.filter((Category) =>
+        state.some((categories) => categories === Category.category)
+      )
+    );
+  }, [state]);
 
   if (!product.length) return <div>Loading...</div>;
   return (
@@ -79,7 +70,7 @@ const Product = () => {
       <Switch onClick={() => setActive(!active)} />
       <hr />
       <div className="top-info">
-        <h3 className="total-products">Found total {product.length} items</h3>
+        <h3 className="total-products">Found total {filteredItem.length} items</h3>
         <Search onChange={searchHandle} />
       </div>
       <hr />
@@ -88,32 +79,33 @@ const Product = () => {
           <h3>CATEGORIES</h3>
           <Filter
             SortedItems={filteredResults}
-            onFilterchange={checkbox_sort} 
+            onFilterchange={checkboxSort}
           />
         </div>
-        <div className="division-left">
-          {filteredResults.map((filteredResult) => (
-            <div>
-              <div className="categories">
-                {filteredResult.category} ({filteredResult.items.length})
-              </div>
-              {filteredResult.items.map((item: IProduct) => (
-                <div>
-                  {active ? (
-                    <div className="lists-items">
-                      <List item={item} />
-                    </div>
-                  ) : (
-                    <div className="grid-items">
-                      <Grid item={item} />
-                    </div>
-                  )}
+          <div className="division-left">
+             {filteredItem.map((filteredResult) => (
+              <div>
+                <div className="categories">
+                  {filteredResult.category}
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
+                {filteredItem.map((item: IProduct) => (
+                  <div>
+                    {active ? (
+                      <div className="lists-items">
+                        <List item={item} />
+                      </div>
+                    ) : (
+                      <div className="grid-items">
+                        <Grid item={item} />
+                      </div>
+                    )}
+                  </div>
+                ))}
+                   </div>
+                ))}  
+          </div>;
       </div>
+          
     </div>
   );
 };
