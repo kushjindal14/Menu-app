@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import List from "./list-view";
 import Grid from "./grid-view";
@@ -7,12 +7,12 @@ import "./product.scss";
 import Switch from "./switch";
 import Filter from "./filtering";
 import Search from "./searchbox";
-import { isTemplateExpression } from "typescript";
-
 
 const Product = () => {
   const [product, setProduct] = useState<IProduct[]>([]);
   const [active, setActive] = useState(true);
+  const [state, setState] = useState([""]);
+  const [filteredItem, setFilteredItem] = useState<IProduct[]>([]);
 
   useEffect(() => {
     getdata();
@@ -40,21 +40,29 @@ const Product = () => {
       items: product.filter((item: IProduct) => item.category === category),
     };
   });
-  
 
   const searchHandle = async (event: any) => {
     let key = event.target.value;
-    let data = await axios.get("https://fakestoreapi.com/products/ +{key}");
+    let data = await axios.get("https://fakestoreapi.com/products/");
     if (data) {
       setProduct(data.data);
     }
   };
 
-  const checkbox_sort =() =>{
-    setActive(!active);
-
-  }
-  console.warn(checkbox_sort);
+  const checkboxSort = (event) => {
+    if (event.target.checked) {
+      setState([...state, event.target.value]);
+    } else {
+      setState(state.filter((categories) => categories !== event.target.value));
+    }
+  };
+  useEffect(() => {
+    setFilteredItem(
+      product.filter((Category) =>
+        state.some((categories) => categories === Category.category)
+      )
+    );
+  }, [state]);
 
   if (!product.length) return <div>Loading...</div>;
   return (
@@ -62,38 +70,42 @@ const Product = () => {
       <Switch onClick={() => setActive(!active)} />
       <hr />
       <div className="top-info">
-        <h3 className="total-products">Found total {product.length} items</h3>
+        <h3 className="total-products">Found total {filteredItem.length} items</h3>
         <Search onChange={searchHandle} />
       </div>
       <hr />
       <div className="products">
         <div>
           <h3>CATEGORIES</h3>
-          <Filter SortedItems={filteredResults} onChange={checkbox_sort}/>
+          <Filter
+            SortedItems={filteredResults}
+            onFilterchange={checkboxSort}
+          />
         </div>
-        <div className="division-left">
-          {filteredResults.map((filteredResult) => (
-            <div>
-              <div className="categories">
-                {filteredResult.category} ({filteredResult.items.length})
-              </div>
-              {filteredResult.items.map((item: IProduct) => (
-                <div>
-                  {active ? (
-                    <div className="lists-items">
-                      <List item={item} />
-                    </div>
-                  ) : (
-                    <div className="grid-items">
-                      <Grid item={item} />
-                    </div>
-                  )}
+          <div className="division-left">
+             {filteredItem.map((filteredResult) => (
+              <div>
+                <div className="categories">
+                  {filteredResult.category}
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
+                {filteredItem.map((item: IProduct) => (
+                  <div>
+                    {active ? (
+                      <div className="lists-items">
+                        <List item={item} />
+                      </div>
+                    ) : (
+                      <div className="grid-items">
+                        <Grid item={item} />
+                      </div>
+                    )}
+                  </div>
+                ))}
+                   </div>
+                ))}  
+          </div>;
       </div>
+          
     </div>
   );
 };
